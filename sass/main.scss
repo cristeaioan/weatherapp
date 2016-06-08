@@ -1,0 +1,153 @@
+// IMPORTS
+@import "reset";
+@import "grid";
+
+// Defaults
+* { box-sizing: border-box; }
+
+@-ms-viewport { width: devide-width; }
+
+body {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: #dde3e7;
+	min-height: 100vh;
+	font: 18px 'Open Sans', sans-serif;
+	color: #132c4f;
+}
+
+@include breakpoint(680px) {
+	body { font-size: 20px }
+}
+
+.clear { clear: both }
+
+// Typography
+h1 { font-size: 8em }
+
+h2 { font-size: 2.4em }
+
+h3 { font-size: 1.7em }
+
+h4 { font-size: 1.2em }
+
+
+// SECTIONS
+// Error
+.error {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100vh;
+	background-color: #fff;
+	text-align: center;
+	z-index: 100;
+
+	h3 { margin: 0 auto }
+}
+
+// Current weather panel
+.curr-wthr {
+	.container {
+		position: relative;
+		background-color: #000;
+		background-size: cover;
+		background-position: center center;
+	}
+
+	.curr-wth-wrpr {
+		background-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+		background-position: top left;
+		padding: 47px 0 17px 0;
+		color: #fff;
+	}
+
+	.location, .temp {
+		@include span(10);
+		@include push(1);
+		z-index: 99;
+	}
+
+	.location { margin-bottom: 93px }
+
+	.temp span { font-size: 0.563em }
+
+	h1, h2 { font-weight: 600 }
+}
+
+// Forecast
+.forecast {
+	text-align: center;
+
+	.container {
+		background-color: #fff;
+		padding-top: 33px;
+		padding-bottom: 33px;
+	}
+
+	.heading {
+		margin-bottom: 16px;
+	}
+
+	.icon {
+		margin-bottom: 9px;
+
+		img {
+			width: 46px;
+			height: auto;
+		}
+	}
+
+	.curr-wthr-state {
+		@include span(12);
+		margin-bottom: 34px;
+
+		.icon {
+			margin-bottom: 1px;
+
+			img { width: 100px }
+		}
+	}
+
+	.day {
+		@include span(6);
+		padding-top: 22px;
+		border-style: solid;
+		border-color: #DDDDDD;
+		border-top-width: 1px;
+
+		&:nth-child(1), &:nth-child(2) {
+			padding-bottom: 22px;
+		}
+
+		&:nth-child(odd) {
+			border-right-width: 1px;
+		}
+	}
+
+	@include breakpoint(680px) {
+		.curr-wthr-state {
+			@include span(4);
+			margin-bottom: 0;
+		}
+
+		.day {
+			@include span(2);
+			padding-top: 0;
+			border-top-width: 0;
+
+			&:nth-child(1), &:nth-child(2) {
+				padding-bottom: 0;
+			}
+
+			&:nth-child(odd) {
+				border-right-width: 0;
+			}
+		}
+	}
+}

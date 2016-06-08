@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=devide-width, initial-scale=1">
+    <title>Weather report</title>
+    <meta name="keywords" content="weather, forecast, openweathermap, google, geoloc, api, javascript, json">
+    <meta name="description" content="Weather report application built on openweathermap and googlemaps geloc api.">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js'></script>
+        <script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'></script>
+    <![endif]-->
+
+    <!-- CSS-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+    <div class="error">
+        <h3>Unable to retrieve your location.<br>
+            Please activate your location setting, then refresh the page.</h3>
+    </div>
+
+    <section class="curr-wthr">
+        <div class="container">
+            <div class="curr-wth-wrpr">
+                <div class="location">
+                    <h2>--</h2>
+                    <h3>--</h3>
+                </div>
+
+                <div class="temp"><h1>--<span>°-</span></h1></div>
+
+                <div class="clear"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="forecast">
+        <div class="container">
+            <div class="curr-wthr-state">
+                <div class="heading">Right now</div>
+                <div class="icon"><img src=""></div>
+                <div class="description"><h4>--</h4></div>
+            </div>
+
+            <div class="daily">
+                <div class="day">
+                    <div class="heading">--</div>
+                    <div class="icon"><img src="" alt=""></div>
+                    <div class="temp">-- °-</div>
+                </div>
+                <div class="day">
+                    <div class="heading">--</div>
+                    <div class="icon"><img src="" alt=""></div>
+                    <div class="temp">-- °-</div>
+                </div>
+                <div class="day">
+                    <div class="heading">--</div>
+                    <div class="icon"><img src="" alt=""></div>
+                    <div class="temp">-- °-</div>
+                </div>
+                <div class="day">
+                    <div class="heading">--</div>
+                    <div class="icon"><img src="" alt=""></div>
+                    <div class="temp">-- °-</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- jQuery-->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="js/main.min.js"></script>
+</body>
+</html>
