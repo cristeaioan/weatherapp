@@ -1,11 +1,13 @@
 jQuery(function($) {
 	function success(position) {
-		$('.error').css('display', 'none');
+		var pageOverlay = jQuery('.page-overlay');
+
+		pageOverlay.find('h3').text('Retrieving weather information...')
 
 		var lat = position.coords.latitude,
 			lon = position.coords.longitude;
 
-		$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&sensor=false', function(locInfo) {
+		$.getJSON('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&sensor=false&key=AIzaSyByUe5jHZIiNa9TnDOQKmDIy8EcRvHa92I', function(locInfo) {
 			// Convert unix time into day of the week
 			function time(timestamp) {
 				var a = new Date(timestamp*1000);
@@ -17,41 +19,79 @@ jQuery(function($) {
 				return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 			}
 
+
 			// Decide temperature format (metric/imperial)
 			var impCountryCodes = ['BS', 'BZ', 'KY', 'PW', 'US'],
 				units;
-			if(impCountryCodes.indexOf(locInfo.results[0].address_components[5].short_name) == -1) units='si';
-			else units='us';
+			if(impCountryCodes.indexOf(locInfo.results[0].address_components[5].short_name) == -1) units='metric';
+				else units = 'imperial';
 			function unitText() {
-				if (units = 'metric') return ' &deg;C'; else return ' &deg;F';
+				if (units == 'metric') return ' &deg;C'; else return ' &deg;F';
 			}
 
 			$('.location h2').html(locInfo.results[0].address_components[2].long_name);
 			$('.location h3').html(locInfo.results[0].address_components[5].long_name);
 
-			// Current weather report
-			$.get('https://api.forecast.io/forecast/b421d301ce7ef50d4a9d6e02ff0373ed/' + lat +',' + lon + '?units=' + units, function(weatherInfo) {
-				//$('.curr-wthr .container').css('background-image', 'url("images/bgs/' + weatherInfo.weather[0].icon + '.jpg")');
-				$('.curr-wthr .temp h1').html(Math.floor(weatherInfo.currently.temperature) + '<span>' + unitText() + '</span>');
 
-				$('.curr-wthr-state .icon img').attr('src', 'images/icons/' + weatherInfo.currently.icon + '.svg');
-				$('.curr-wthr-state .description').html(upper(weatherInfo.currently.summary));
+			// Get information about current and forecast weather
+			$.ajax({
+				'async': true,
+				'crossDomain': true,
+				'url': 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat +'&lon=' + lon + '&appid=0e4ac4b36b6cdcf2661160019d9f5154&exclude=minutely,hourly,alerts&units=' + units,
+				'method': 'GET',
+				success: function (weatherInfo) {
+					console.log(weatherInfo);
 
-				$('.daily .day').each(function(day) {
-					var day=day+1;
+					// Display weather information
+					var currentWeather = weatherInfo.current,
+						currWeatherCondition = currentWeather.weather[0],
+						currWeatherConditionDescr = upper(currWeatherCondition.description),
+						currWeatherConditionCode = currWeatherCondition.icon,
+						currentWeatherTemp = currentWeather.temp;
 
-					$(this).children('.heading').html(time(weatherInfo.daily.data[day].time));
-					$(this).children('.icon').children('img').attr('src', 'images/icons/' + weatherInfo.daily.data[day].icon + '.svg');
-					$(this).children('.temp').html(Math.floor((weatherInfo.daily.data[day].temperatureMin+weatherInfo.daily.data[day].temperatureMax)/2) + unitText());
-				});
 
-			}, 'jsonp');
+					$('.curr-wthr .container').css('background-image', 'url("images/bgs/' + currWeatherConditionCode + '.jpg")');
+					$('.curr-wthr .temp h1').html(Math.ceil(currentWeatherTemp) + '<span>' + unitText() + '</span>');
+
+					$('.curr-wthr-state .icon img').attr('src', 'images/icons/' + currWeatherConditionCode + '.svg');
+					$('.curr-wthr-state .description').html(currWeatherConditionDescr);
+
+
+					// Display forecast weather information
+					var forecastWeather = weatherInfo.daily,
+						currForecastWeather,
+						currForecastWeatherConditionCode,
+						currForecastWeatherTempMin,
+						currForecastWeatherTempMax,
+						i = 1;
+
+					$('.daily .day').each(function(day) {
+						currForecastWeather = forecastWeather[i];
+
+						currForecastWeatherConditionCode = currForecastWeather.weather[0].icon;
+
+						currForecastWeatherTempMin = Math.ceil(currForecastWeather.temp.min);
+						currForecastWeatherTempMax = Math.ceil(currForecastWeather.temp.max);
+
+
+						$(this).children('.heading').html(time(currForecastWeather.dt));
+						$(this).children('.icon').children('img').attr('src', 'images/icons/' + currForecastWeatherConditionCode + '.svg');
+						$(this).children('.temp').html(currForecastWeatherTempMin + ' / ' + currForecastWeatherTempMax + unitText());
+
+						i++;
+					});
+
+					setTimeout(function () {
+						pageOverlay.addClass('hidden-content');
+
+						setTimeout(function () {
+							pageOverlay.addClass('hidden-overlay');
+						}, 400);
+					}, 300);
+				}
+			});
 		});
-	};
+	}
 
-	function error() {
-		$('.error').css('display', 'flex');
-	};
-
-	navigator.geolocation.getCurrentPosition(success, error);
+	navigator.geolocation.getCurrentPosition(success);
 });
