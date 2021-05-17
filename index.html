@@ -15,65 +15,77 @@
     <![endif]-->
 
     <!-- CSS-->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel="preload" type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 
 <body>
-    <section class="page-overlay">
-        <div class="content-loading"></div>
 
-        <h3>Unable to retrieve your location.<br>
-            Please activate your location setting, then refresh the page.</h3>
-    </section>
-
-    <section class="curr-wthr">
+    <div class="location-search">
         <div class="container">
-            <div class="curr-wth-wrpr">
-                <div class="location">
-                    <h2>--</h2>
-                    <h3>--</h3>
+            <div class="current-location" title="Get current location">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-compass"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+            </div>
+
+            <form action="#" id="locationForm">
+                <input type="text" name="location" id="location" placeholder="Enter location name and press enter...">
+            </form>
+        </div>
+    </div>
+
+
+    <section class="weather-info-wrap">
+        <div class="container">
+            <div class="weather-info-current">
+                <div class="wic-location">
+                    <h2 class="wic-location-city">City</h2>
+                    <h3 class="wic-location-country">Country</h3>
                 </div>
 
-                <div class="temp"><h1>--<span>°-</span></h1></div>
+                <div class="wic-temp"><h1>0<span>°C</span></h1></div>
+            </div>
 
-                <div class="clear"></div>
+            <div class="weather-info-forecast">
+                <div class="wif-current-state">
+                    <div class="wif-heading">Right now</div>
+                    <div class="wif-icon">
+                        <img src="images/icons/01d.svg">
+                    </div>
+                    <div class="wif-description"><h4>Weather state</h4></div>
+                </div>
+
+                <div class="wif-daily">
+                    <div class="wif-day">
+                        <div class="wif-heading">Mon</div>
+                        <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
+                        <div class="wif-temp">0 °C</div>
+                    </div>
+                    <div class="wif-day">
+                        <div class="wif-heading">Tue</div>
+                        <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
+                        <div class="wif-temp">0 °C</div>
+                    </div>
+                    <div class="wif-day">
+                        <div class="wif-heading">Wed</div>
+                        <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
+                        <div class="wif-temp">0 °C</div>
+                    </div>
+                    <div class="wif-day">
+                        <div class="wif-heading">Thu</div>
+                        <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
+                        <div class="wif-temp">0°C</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weather-info-overlay">
+                <div class="content-loading"></div>
+
+                <h3>Retrieving weather information</h3>
             </div>
         </div>
     </section>
 
-    <section class="forecast">
-        <div class="container">
-            <div class="curr-wthr-state">
-                <div class="heading">Right now</div>
-                <div class="icon"><img src=""></div>
-                <div class="description"><h4>--</h4></div>
-            </div>
-
-            <div class="daily">
-                <div class="day">
-                    <div class="heading">--</div>
-                    <div class="icon"><img src="" alt=""></div>
-                    <div class="temp">-- °-</div>
-                </div>
-                <div class="day">
-                    <div class="heading">--</div>
-                    <div class="icon"><img src="" alt=""></div>
-                    <div class="temp">-- °-</div>
-                </div>
-                <div class="day">
-                    <div class="heading">--</div>
-                    <div class="icon"><img src="" alt=""></div>
-                    <div class="temp">-- °-</div>
-                </div>
-                <div class="day">
-                    <div class="heading">--</div>
-                    <div class="icon"><img src="" alt=""></div>
-                    <div class="temp">-- °-</div>
-                </div>
-            </div>
-        </div>
-    </section>
     
     <!-- jQuery-->
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
