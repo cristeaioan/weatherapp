@@ -91,16 +91,34 @@ jQuery(function($) {
 						'method': 'GET',
 						success: function (locationInfo) {
 
+							var addressComponents = locationInfo.results[0].address_components,
+								country = '',
+								countryCode = '',
+								city = '';
+
+							for ( var i = 0; i < addressComponents.length; i++ ) {
+								for ( var j = 0; j < addressComponents[i].types.length; j ++ ) {
+									if( addressComponents[i].types[j] === 'country' ) {
+										country = addressComponents[i].long_name;
+										countryCode = addressComponents[i].short_name;
+									}
+
+									if( addressComponents[i].types[j] === 'locality' ) {
+										city = addressComponents[i].long_name;
+									}
+								}
+							}
+
 							// Decide temperature format (metric/imperial)
 							// based on country code
-							if (impCountryCodes.indexOf(locationInfo.results[0].address_components[3].short_name) == -1)
+							if ( impCountryCodes.indexOf(countryCode) == -1 )
 								units='metric';
 							else units = 'imperial';
 
 
 							// Display the city and country names
-							$currWeatherLocationCity.html(locationInfo.results[0].address_components[0].long_name);
-							$currWeatherLocationCountry.html(locationInfo.results[0].address_components[3].long_name);
+							$currWeatherLocationCity.html(city);
+							$currWeatherLocationCountry.html(country);
 
 
 							// Get and display weather info
@@ -142,16 +160,34 @@ jQuery(function($) {
 					'method': 'GET',
 					success: function (locationInfo) {
 
+						var addressComponents = locationInfo.results[0].address_components,
+							country = '',
+							countryCode = '',
+							city = '';
+
+						for ( var i = 0; i < addressComponents.length; i++ ) {
+							for ( var j = 0; j < addressComponents[i].types.length; j ++ ) {
+								if( addressComponents[i].types[j] === 'country' ) {
+									country = addressComponents[i].long_name;
+									countryCode = addressComponents[i].short_name;
+								}
+
+								if( addressComponents[i].types[j] === 'locality' ) {
+									city = addressComponents[i].long_name;
+								}
+							}
+						}
+
 						// Decide temperature format (metric/imperial)
 						// based on country code
-						if (impCountryCodes.indexOf(locationInfo.results[0].address_components[5].short_name) == -1)
+						if ( impCountryCodes.indexOf(countryCode) == -1 )
 							units='metric';
 						else units = 'imperial';
 
 
 						// Display the city and country names
-						$currWeatherLocationCity.html(locationInfo.results[0].address_components[2].long_name);
-						$currWeatherLocationCountry.html(locationInfo.results[0].address_components[5].long_name);
+						$currWeatherLocationCity.html(city);
+						$currWeatherLocationCountry.html(country);
 
 
 						// Get and display weather info
