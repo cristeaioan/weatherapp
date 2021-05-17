@@ -53,8 +53,8 @@ jQuery(function($) {
 			// user's current location
 			setTimeout(function () {
 				getCurrentLocationWeather();
-			}, 500);
-		}, 250);
+			}, 450);
+		}, 200);
 
 	});
 
@@ -111,8 +111,8 @@ jQuery(function($) {
 
 						}
 					});
-				}, 500);
-			}, 250);
+				}, 400);
+			}, 200);
 		}
 		// If the location input is empty, try to get the
 		// weather info for the user's current location
@@ -235,8 +235,8 @@ jQuery(function($) {
 
 					setTimeout(function () {
 						$weatherInfoWrap.addClass('weather-info-loaded-2');
-					}, 450);
-				}, 400);
+					}, 400);
+				}, 350);
 			}
 		});
 

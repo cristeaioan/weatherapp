@@ -1,94 +1,90 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=devide-width, initial-scale=1">
-    <title>Weather report</title>
-    <meta name="keywords" content="weather, forecast, forecast.io, google, geoloc, api, javascript, json">
-    <meta name="description" content="Weather report application built on forecast.io and googlemaps geloc api.">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Weather Report</title>
+        <meta name="keywords" content="weather, forecast, open, weather, map, openweathermap, google, maps, geoloc, geolocation, api, javascript, json, current">
+        <meta name="description" content="Weather report application built on OpenWeatherMap and Google Maps Gelocation API.">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js'></script>
-        <script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'></script>
-    <![endif]-->
+        <!-- FAVICON -->
+        <link rel="icon" href="images/favicon.png">
 
-    <!-- CSS-->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel="preload" type='text/css'>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-</head>
+        <!-- CSS -->
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel="preload" type='text/css'>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+    </head>
 
-<body>
+    <body>
 
-    <div class="location-search">
-        <div class="container">
-            <div class="current-location" title="Get current location">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-compass"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
-            </div>
-
-            <form action="#" id="locationForm">
-                <input type="text" name="location" id="location" placeholder="Enter location name and press enter...">
-            </form>
-        </div>
-    </div>
-
-
-    <section class="weather-info-wrap">
-        <div class="container">
-            <div class="weather-info-current">
-                <div class="wic-location">
-                    <h2 class="wic-location-city">City</h2>
-                    <h3 class="wic-location-country">Country</h3>
+        <div class="location-search">
+            <div class="container">
+                <div class="current-location" title="Get current location">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-compass"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
                 </div>
 
-                <div class="wic-temp"><h1>0<span>°C</span></h1></div>
-            </div>
-
-            <div class="weather-info-forecast">
-                <div class="wif-current-state">
-                    <div class="wif-heading">Right now</div>
-                    <div class="wif-icon">
-                        <img src="images/icons/01d.svg">
-                    </div>
-                    <div class="wif-description"><h4>Weather state</h4></div>
-                </div>
-
-                <div class="wif-daily">
-                    <div class="wif-day">
-                        <div class="wif-heading">Mon</div>
-                        <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
-                        <div class="wif-temp">0 °C</div>
-                    </div>
-                    <div class="wif-day">
-                        <div class="wif-heading">Tue</div>
-                        <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
-                        <div class="wif-temp">0 °C</div>
-                    </div>
-                    <div class="wif-day">
-                        <div class="wif-heading">Wed</div>
-                        <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
-                        <div class="wif-temp">0 °C</div>
-                    </div>
-                    <div class="wif-day">
-                        <div class="wif-heading">Thu</div>
-                        <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
-                        <div class="wif-temp">0°C</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="weather-info-overlay">
-                <div class="content-loading"></div>
-
-                <h3>Retrieving weather information</h3>
+                <form action="#" id="locationForm">
+                    <input type="text" name="location" id="location" placeholder="Enter location name and press enter...">
+                </form>
             </div>
         </div>
-    </section>
 
-    
-    <!-- jQuery-->
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="js/main.min.js"></script>
-</body>
+
+        <section class="weather-info-wrap">
+            <div class="container">
+                <div class="weather-info-current">
+                    <div class="wic-location">
+                        <h2 class="wic-location-city">City</h2>
+                        <h3 class="wic-location-country">Country</h3>
+                    </div>
+
+                    <div class="wic-temp"><h1>0<span>°C</span></h1></div>
+                </div>
+
+                <div class="weather-info-forecast">
+                    <div class="wif-current-state">
+                        <div class="wif-heading">Right now</div>
+                        <div class="wif-icon">
+                            <img src="images/icons/01d.svg">
+                        </div>
+                        <div class="wif-description"><h4>Weather state</h4></div>
+                    </div>
+
+                    <div class="wif-daily">
+                        <div class="wif-day">
+                            <div class="wif-heading">Mon</div>
+                            <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
+                            <div class="wif-temp">0 °C</div>
+                        </div>
+                        <div class="wif-day">
+                            <div class="wif-heading">Tue</div>
+                            <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
+                            <div class="wif-temp">0 °C</div>
+                        </div>
+                        <div class="wif-day">
+                            <div class="wif-heading">Wed</div>
+                            <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
+                            <div class="wif-temp">0 °C</div>
+                        </div>
+                        <div class="wif-day">
+                            <div class="wif-heading">Thu</div>
+                            <div class="wif-icon"><img src="images/icons/01d.svg" alt=""></div>
+                            <div class="wif-temp">0°C</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weather-info-overlay">
+                    <div class="content-loading"></div>
+
+                    <h3>Retrieving weather information</h3>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- jQuery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="js/main.min.js"></script>
+    </body>
 </html>
