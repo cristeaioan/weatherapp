@@ -63,81 +63,89 @@ jQuery(function($) {
 	// Try to get the weather info for the location
 	// the user is searching for
 	var $locationForm = $('#locationForm'),
-		$locationInput = $locationForm.find('#location'),
-		address = '';
+		autocomplete,
+		$locationInput = document.getElementById('location'),
+		options = {
+			types: ['(cities)'],
+			fields: ['address_components', 'geometry'],
+		};
 
+
+	// Prevent the search location form from submitting on enter
 	$locationForm.on('submit', function (e) {
 
 		e.preventDefault();
 
-		var locationInputVal = $locationInput.val();
+	});
 
-		// If the location input is not empty, try to get the
-		// weather info for the location the user is searching for
-		if( locationInputVal !== '' ) {
-			address = locationInputVal;
 
+	// Initialize the Places Autocomplete API from Google
+	autocomplete = new google.maps.places.Autocomplete($locationInput, options);
+
+
+	// Add an event listener for when the user selects a location
+	// from the autocomplete field
+	autocomplete.addListener('place_changed', function () {
+		// Store the location info
+		var locationInfo = autocomplete.getPlace();
+
+
+		// If the user did not select a prediction, reset the input field
+		if( !locationInfo.geometry ) {
+			$locationInput.placeholder('Enter a place');
+		}
+		// Process the valid location
+		else {
+			// Display the overlay background and reset the overlay text
 			$weatherInfoWrap.removeClass('weather-info-loaded-2');
 			$weatherInfoOverlayText.text('Retrieving weather information...');
 
 			setTimeout(function () {
+				// Display the overlay text
 				$weatherInfoWrap.removeClass('weather-info-loaded-1');
 
 				setTimeout(function () {
-					$.ajax({
-						'async': true,
-						'crossDomain': true,
-						'url': 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyByUe5jHZIiNa9TnDOQKmDIy8EcRvHa92I',
-						'method': 'GET',
-						success: function (locationInfo) {
+					var addressComponents = locationInfo.address_components,
+						country, countryCode, city,
+						geometryCoords = locationInfo.geometry.location;
 
-							var addressComponents = locationInfo.results[0].address_components,
-								country = '',
-								countryCode = '',
-								city = '';
-
-							for ( var i = 0; i < addressComponents.length; i++ ) {
-								for ( var j = 0; j < addressComponents[i].types.length; j ++ ) {
-									if( addressComponents[i].types[j] === 'country' ) {
-										country = addressComponents[i].long_name;
-										countryCode = addressComponents[i].short_name;
-									}
-
-									if( addressComponents[i].types[j] === 'locality' ) {
-										city = addressComponents[i].long_name;
-									}
-								}
+					// Parse the address components and identify the country and city
+					for ( var i = 0; i < addressComponents.length; i++ ) {
+						for ( var j = 0; j < addressComponents[i].types.length; j ++ ) {
+							// Identify the country and get the name and code
+							if( addressComponents[i].types[j] === 'country' ) {
+								country = addressComponents[i].long_name;
+								countryCode = addressComponents[i].short_name;
 							}
 
-							// Decide temperature format (metric/imperial)
-							// based on country code
-							if ( impCountryCodes.indexOf(countryCode) == -1 )
-								units='metric';
-							else units = 'imperial';
-
-
-							// Display the city and country names
-							$currWeatherLocationCity.html(city);
-							$currWeatherLocationCountry.html(country);
-
-
-							// Get and display weather info
-							lat = locationInfo.results[0].geometry.location.lat;
-							lon = locationInfo.results[0].geometry.location.lng;
-
-							getWeatherInfo(lat, lon);
-
+							// Identify the city and get the name
+							if( addressComponents[i].types[j] === 'locality' ) {
+								city = addressComponents[i].long_name;
+							}
 						}
-					});
+					}
+
+
+					// Display the city and country names
+					$currWeatherLocationCity.html(city);
+					$currWeatherLocationCountry.html(country);
+
+
+					// Decide temperature format (metric/imperial)
+					// based on country code
+					if ( impCountryCodes.indexOf(countryCode) == -1 )
+						units='metric';
+					else units = 'imperial';
+
+
+					// Get and display weather info
+					lat = geometryCoords.lat();
+					lon = geometryCoords.lng();
+
+					getWeatherInfo(lat, lon);
 				}, 400);
 			}, 200);
 		}
-		// If the location input is empty, try to get the
-		// weather info for the user's current location
-		else {
-			getCurrentLocationWeather();
-		}
-
 	});
 
 
@@ -220,6 +228,8 @@ jQuery(function($) {
 			'url': 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat +'&lon=' + lon + '&appid=0e4ac4b36b6cdcf2661160019d9f5154&exclude=minutely,hourly,alerts&units=' + units,
 			'method': 'GET',
 			success: function (weatherInfo) {
+
+				console.log(weatherInfo);
 
 				// Display current weather information
 				var currentWeather = weatherInfo.current,

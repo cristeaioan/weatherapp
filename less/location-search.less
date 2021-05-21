@@ -1,0 +1,98 @@
+.location-search {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .container {
+    align-items: center;
+    background-color: #fff;
+    padding: 15px 20px;
+  }
+
+  .current-location {
+    display: flex;
+    align-items: center;
+    width: 20px;
+    margin-right: 25px;
+    opacity: .5;
+    cursor: pointer;
+    transition: opacity .2s linear;
+
+    &:hover {
+      opacity: .8;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+
+
+/* -------- */
+/* ---- LOCATION FORM */
+/* -------- */
+#locationForm {
+  display: flex;
+  flex: 1;
+}
+
+#location {
+  flex: 1;
+  -webkit-appearance: none;
+  font-size: .8em;
+  line-height: 2.6;
+  border-width: 0 0 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.12);
+  outline: none !important;
+  transition: border-color .2s linear;
+
+  &:focus {
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+
+
+/* -------- */
+/* ---- AUTOCOMPLETE POP-UP */
+/* -------- */
+.pac-container {
+  padding: 16px 20px;
+  font-family: inherit;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+
+  &:after {
+    display: none;
+  }
+}
+
+.pac-item {
+  padding: 14px 0 13px;
+  font-size: .7em;
+  line-height: 1;
+  cursor: pointer;
+  border-top-color: #ececec;
+
+  &:first-child {
+    border-top: 0;
+  }
+
+  &:hover {
+    background-color: transparent;
+    text-decoration: underline;
+  }
+}
+
+.pac-icon {
+  display: none;
+}
+
+.pac-item-query {
+  font-size: 1em;
+}
