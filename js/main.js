@@ -30,6 +30,26 @@ jQuery(function($) {
 
 
 
+	// Try to get the weather info for the location
+	// the user is searching for
+	var $locationForm = $('#locationForm'),
+		autocomplete,
+		$locationInput = document.getElementById('location'),
+		options = {
+			types: ['(cities)'],
+			fields: ['address_components', 'geometry'],
+		};
+
+
+	// Prevent the search location form from submitting on enter
+	$locationForm.on('submit', function (e) {
+
+		e.preventDefault();
+
+	});
+
+
+
 	// If the user chooses so, try to get the weather info
 	// for the user's current location
 	var $currentLocationBtn = $('.current-location');
@@ -37,7 +57,7 @@ jQuery(function($) {
 	$currentLocationBtn.on('click', function () {
 
 		// Reset the location input
-		$locationInput.val('');
+		$locationInput.value = '';
 
 
 		// Display the overlay background and reset the overlay text
@@ -55,26 +75,6 @@ jQuery(function($) {
 				getCurrentLocationWeather();
 			}, 450);
 		}, 200);
-
-	});
-
-
-
-	// Try to get the weather info for the location
-	// the user is searching for
-	var $locationForm = $('#locationForm'),
-		autocomplete,
-		$locationInput = document.getElementById('location'),
-		options = {
-			types: ['(cities)'],
-			fields: ['address_components', 'geometry'],
-		};
-
-
-	// Prevent the search location form from submitting on enter
-	$locationForm.on('submit', function (e) {
-
-		e.preventDefault();
 
 	});
 
@@ -112,6 +112,8 @@ jQuery(function($) {
 					// Parse the address components and identify the country and city
 					for ( var i = 0; i < addressComponents.length; i++ ) {
 						for ( var j = 0; j < addressComponents[i].types.length; j ++ ) {
+							console.log(addressComponents[i]);
+
 							// Identify the country and get the name and code
 							if( addressComponents[i].types[j] === 'country' ) {
 								country = addressComponents[i].long_name;
@@ -228,8 +230,6 @@ jQuery(function($) {
 			'url': 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat +'&lon=' + lon + '&appid=0e4ac4b36b6cdcf2661160019d9f5154&exclude=minutely,hourly,alerts&units=' + units,
 			'method': 'GET',
 			success: function (weatherInfo) {
-
-				console.log(weatherInfo);
 
 				// Display current weather information
 				var currentWeather = weatherInfo.current,
